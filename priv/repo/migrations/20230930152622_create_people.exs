@@ -7,5 +7,7 @@ defmodule FamilyTree.Repo.Migrations.CreatePeople do
 
       timestamps()
     end
+
+    create unique_index(:people, :name)
   end
 end
