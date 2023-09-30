@@ -11,5 +11,6 @@ defmodule FamilyTree.Repo.Migrations.CreateConnections do
     end
 
     create unique_index(:connections, [:person1_id, :person2_id])
+    create unique_index(:connections, [:person2_id, :person1_id])
   end
 end
