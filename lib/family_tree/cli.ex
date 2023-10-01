@@ -43,6 +43,12 @@ defmodule FamilyTree.CLI do
       ["count", relationship, "of", first_name] ->
         handle_count(relationship, first_name)
 
+      ["father", "of", first_name, last_name] ->
+        handle_name("#{first_name} #{last_name}")
+
+      ["father", "of", first_name] ->
+        handle_name(first_name)
+
       _ ->
         IO.puts("Invalid command. Please use the below commands.
 
@@ -72,5 +78,9 @@ defmodule FamilyTree.CLI do
 
   defp handle_count(relationship, name) do
     IO.inspect(get_count(relationship, name))
+  end
+
+  defp handle_name(name) do
+    IO.inspect(get_father_name(name))
   end
 end

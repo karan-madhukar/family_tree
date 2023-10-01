@@ -100,6 +100,14 @@ defmodule FamilyTree.People do
         "daughters" ->
           relationship1 = get_relationship_by_name("daughter")
           get_relation_count(relationship1, nil, person)
+
+        "wives" ->
+          relationship1 = get_relationship_by_name("wife")
+          relationship2 = get_relationship_by_name("husband")
+          get_relation_count(relationship1, relationship2, person)
+
+        _ ->
+          "Error: Currently this relationship is not handled."
       end
     else
       nil -> "Error: Person with name #{name} doesn't exists."
@@ -129,5 +137,37 @@ defmodule FamilyTree.People do
           (c.person2_id == ^person.id and c.relationship_id == ^relationship1.id)
     )
     |> Repo.aggregate(:count)
+  end
+
+  def get_father_name(name) do
+    with %Person{} = person <- get_person_by_name(name) do
+      case get_father_connection(person) do
+        %Connection{} = connection when connection.relationship.name in ["son", "daughter"] ->
+          connection.person2.name
+
+        %Connection{} = connection when connection.relationship.name == "father" ->
+          connection.person1.name
+
+        nil ->
+          "Error: There is no such connection available."
+      end
+    else
+      nil -> "Error: Person with name #{name} doesn't exists."
+    end
+  end
+
+  defp get_father_connection(person) do
+    relationship1 = get_relationship_by_name("son")
+    relationship2 = get_relationship_by_name("father")
+    relationship3 = get_relationship_by_name("daughter")
+
+    from(c in Connection,
+      where:
+        (c.person1_id == ^person.id and c.relationship_id == ^relationship1.id) or
+          (c.person1_id == ^person.id and c.relationship_id == ^relationship3.id) or
+          (c.person2_id == ^person.id and c.relationship_id == ^relationship2.id),
+      preload: [:person1, :person2, :relationship]
+    )
+    |> Repo.one()
   end
 end
