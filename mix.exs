@@ -7,6 +7,7 @@ defmodule FamilyTree.MixProject do
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
+      escript: [main_module: FamilyTree.CLI],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()

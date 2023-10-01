@@ -13,6 +13,6 @@ defmodule FamilyTree.People.Person do
     |> cast(attrs, [:name])
     |> validate_required([:name])
     |> update_change(:name, &String.trim/1)
-    |> validate_length(:name, max: 50)
+    |> unique_constraint(:name)
   end
 end

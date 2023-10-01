@@ -1,4 +1,4 @@
-defmodule FamilyTree.People.Connections do
+defmodule FamilyTree.People.Connection do
   use Ecto.Schema
   import Ecto.Changeset
 
