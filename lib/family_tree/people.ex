@@ -88,4 +88,46 @@ defmodule FamilyTree.People do
     |> Connection.changeset(attrs)
     |> Repo.insert()
   end
+
+  def get_count(relationship, name) do
+    with %Person{} = person <- get_person_by_name(name) do
+      case relationship do
+        "sons" ->
+          relationship1 = get_relationship_by_name("son")
+          relationship2 = get_relationship_by_name("father")
+          get_relation_count(relationship1, relationship2, person)
+
+        "daughters" ->
+          relationship1 = get_relationship_by_name("daughter")
+          get_relation_count(relationship1, nil, person)
+      end
+    else
+      nil -> "Error: Person with name #{name} doesn't exists."
+    end
+  end
+
+  defp get_relation_count(nil, nil, _person), do: "Error: relationship doesn't exists"
+
+  defp get_relation_count(nil, relationship2, person) do
+    from(c in Connection,
+      where: c.person1_id == ^person.id and c.relationship_id == ^relationship2.id
+    )
+    |> Repo.aggregate(:count)
+  end
+
+  defp get_relation_count(relationship1, nil, person) do
+    from(c in Connection,
+      where: c.person2_id == ^person.id and c.relationship_id == ^relationship1.id
+    )
+    |> Repo.aggregate(:count)
+  end
+
+  defp get_relation_count(relationship1, relationship2, person) do
+    from(c in Connection,
+      where:
+        (c.person1_id == ^person.id and c.relationship_id == ^relationship2.id) or
+          (c.person2_id == ^person.id and c.relationship_id == ^relationship1.id)
+    )
+    |> Repo.aggregate(:count)
+  end
 end

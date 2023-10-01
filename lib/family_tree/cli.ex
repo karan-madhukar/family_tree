@@ -37,16 +37,22 @@ defmodule FamilyTree.CLI do
       ["connect", p1_first_name, "as", relationship, "of", p2_first_name] ->
         handle_add_connection(p1_first_name, p2_first_name, relationship)
 
+      ["count", relationship, "of", first_name, last_name] ->
+        handle_count(relationship, "#{first_name} #{last_name}")
+
+      ["count", relationship, "of", first_name] ->
+        handle_count(relationship, first_name)
+
       _ ->
         IO.puts("Invalid command. Please use the below commands.
 
-        # Add a person
+        ## Add a person
         escript ./family_tree add person Amit Dhakad
 
-        # Add a relationship
+        ## Add a relationship
         escript ./family_tree add relationship father
 
-        # Add a connection
+        ## Add a connection
         escript ./family_trees Amit Dhakad as son of KK Dhakad")
         System.halt(1)
     end
@@ -62,5 +68,9 @@ defmodule FamilyTree.CLI do
 
   defp handle_add_connection(person1_name, person2_name, relationship) do
     IO.inspect(add_connection(person1_name, person2_name, relationship))
+  end
+
+  defp handle_count(relationship, name) do
+    IO.inspect(get_count(relationship, name))
   end
 end
