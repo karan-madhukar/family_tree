@@ -14,10 +14,10 @@ defmodule FamilyTree.People do
   def add_person(name) do
     case create_person(name) do
       {:ok, %Person{}} ->
-        "PERSON WITH NAME #{name} HAS BEEN ADDED SUCCESSFULLY."
+        "\e[32mPERSON WITH NAME #{name} HAS BEEN ADDED SUCCESSFULLY."
 
       {:error, %Ecto.Changeset{errors: [name: {message, _}]}} ->
-        "Error: Name #{message}."
+        "\e[31mError: Name #{message}."
     end
   end
 
@@ -37,10 +37,10 @@ defmodule FamilyTree.People do
   def add_relationship(name) do
     case create_relationship(name) do
       {:ok, %Relationship{}} ->
-        "RELATIONSHIP WITH NAME #{name} HAS BEEN ADDED SUCCESSFULLY."
+        "\e[32mRELATIONSHIP WITH NAME #{name} HAS BEEN ADDED SUCCESSFULLY."
 
       {:error, %Ecto.Changeset{errors: [name: {message, _}]}} ->
-        "Error: Name #{message}."
+        "\e[31mError: Name #{message}."
     end
   end
 
@@ -70,16 +70,16 @@ defmodule FamilyTree.People do
              person2_id: person2.id,
              relationship_id: relationship.id
            }) do
-      "CONNECTION CREATED SUCCESSFULLY BETWEEN #{person1_name} AND #{person2_name}."
+      "\e[32mCONNECTION CREATED SUCCESSFULLY BETWEEN #{person1_name} AND #{person2_name}."
     else
       false ->
-        "Error: Ensure that people #{person1_name}, #{person2_name}, and relationship #{relationship_name} are already present in the application."
+        "\e[31mError: Ensure that people #{person1_name}, #{person2_name}, and relationship #{relationship_name} are already present in the application."
 
       {:error, %Ecto.Changeset{errors: [person1_id: {message, _}]}} ->
-        "Error: #{message}."
+        "\e[31mError: #{message}."
 
       %Connection{} ->
-        "Error: has already been taken."
+        "\e[31mError: has already been taken."
     end
   end
 
@@ -107,14 +107,14 @@ defmodule FamilyTree.People do
           get_relation_count(relationship1, relationship2, person)
 
         _ ->
-          "Error: Currently this relationship is not handled."
+          "\e[31mError: Currently this relationship is not handled."
       end
     else
-      nil -> "Error: Person with name #{name} doesn't exists."
+      nil -> "\e[31mError: Person with name #{name} doesn't exists."
     end
   end
 
-  defp get_relation_count(nil, nil, _person), do: "Error: relationship doesn't exists"
+  defp get_relation_count(nil, nil, _person), do: "\e[31mError: relationship doesn't exists"
 
   defp get_relation_count(nil, relationship2, person) do
     from(c in Connection,
@@ -149,10 +149,10 @@ defmodule FamilyTree.People do
           connection.person1.name
 
         nil ->
-          "Error: There is no such connection available."
+          "\e[31mError: There is no such connection available."
       end
     else
-      nil -> "Error: Person with name #{name} doesn't exists."
+      nil -> "\e[31mError: Person with name #{name} doesn't exists."
     end
   end
 

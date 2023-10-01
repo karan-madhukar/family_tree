@@ -65,22 +65,22 @@ defmodule FamilyTree.CLI do
   end
 
   defp handle_add_person(name) do
-    IO.inspect(add_person(name))
+    IO.puts(add_person(name))
   end
 
   defp handle_add_relationship(name) do
-    IO.inspect(add_relationship(name))
+    IO.puts(add_relationship(name))
   end
 
   defp handle_add_connection(person1_name, person2_name, relationship) do
-    IO.inspect(add_connection(person1_name, person2_name, relationship))
+    IO.puts(add_connection(person1_name, person2_name, relationship))
   end
 
   defp handle_count(relationship, name) do
-    IO.inspect(get_count(relationship, name))
+    IO.puts(get_count(relationship, name))
   end
 
   defp handle_name(name) do
-    IO.inspect(get_father_name(name))
+    IO.puts(get_father_name(name))
   end
 end
