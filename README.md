@@ -4,11 +4,17 @@ To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+  * build the script with `mix escript.build`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Now you can use the below command to build and query Family Tree.
+  * To add a person `escript ./family_tree add person <name>`
+  * To add a relationship `escript ./family_tree add relationship <name>`
+  * To add a connection `escript ./family-tree connect <name 1> as <relationship> of <name 2>`
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+  * To get sons count `escript ./family-tree count sons of <name>`
+  * To get daughters count `escript ./family-tree count daughters of <name>`
+  * To get wives count `escript ./family-tree count wives of <name>`
+  * To get father name `escript ./family-tree father of <name>`
 
 ## Learn more
 
