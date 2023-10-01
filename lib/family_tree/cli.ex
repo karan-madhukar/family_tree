@@ -59,7 +59,22 @@ defmodule FamilyTree.CLI do
         escript ./family_tree add relationship father
 
         ## Add a connection
-        escript ./family_trees Amit Dhakad as son of KK Dhakad")
+        escript ./family_tree connect Amit Dhakad as son of KK Dhakad
+
+        ## query
+
+        ## To get sons count
+        escript ./family_tree count sons of KK Dhakad
+
+        ## To get daughters count
+        escript ./family_tree count daughters of Amit Dhakad
+
+        ## To get wives count
+        escript ./family_tree count wives of KK Dhakad
+
+        ## To get father name
+        escript ./family_tree father of Amit Dhakad
+        ")
         System.halt(1)
     end
   end
